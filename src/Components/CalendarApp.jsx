@@ -51,7 +51,6 @@ const CalendarApp = () => {
     if (clickedDate >= today || isSameDay(clickedDate, today)) {
       setSelectedDate(clickedDate);
       setShowEventPopup(true);
-      setEventTime({ hours: "00", minutes: "00" });
       setEventText("");
       setEditingEvent(null);
     }
@@ -69,10 +68,6 @@ const CalendarApp = () => {
     const newEvent = {
       id: editingEvent ? editingEvent.id : Date.now(),
       date: selectedDate,
-      time: `${eventTime.hours.padStart(2, "0")}:${eventTime.minutes.padStart(
-        2,
-        "0"
-      )}`,
       text: eventText,
     };
 
@@ -96,10 +91,6 @@ const CalendarApp = () => {
 
   const handleEditEvent = (event) => {
     setSelectedDate(new Date(event.date));
-    setEventTime({
-      hours: event.time.split(":")[0],
-      minutes: event.time.split(":")[1],
-    });
     setEventText(event.text);
     setEditingEvent(event);
     setShowEventPopup(true);
