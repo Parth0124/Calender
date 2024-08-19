@@ -24,7 +24,6 @@ const CalendarApp = () => {
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [showEventPopup, setShowEventPopup] = useState(false);
   const [events, setEvents] = useState([]);
-  const [eventTime, setEventTime] = useState({ hours: "00", minutes: "00" });
   const [eventText, setEventText] = useState("");
   const [editingEvent, setEditingEvent] = useState(null);
 
@@ -90,7 +89,6 @@ const CalendarApp = () => {
     updatedEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     setEvents(updatedEvents);
-    setEventTime({ hours: "00", minutes: "00" });
     setEventText("");
     setShowEventPopup(false);
     setEditingEvent(null);
@@ -110,14 +108,6 @@ const CalendarApp = () => {
   const handleDeleteEvent = (eventId) => {
     const updatedEvents = events.filter((event) => event.id !== eventId);
     setEvents(updatedEvents);
-  };
-
-  const handleTimeChange = (e) => {
-    const { name, value } = e.target;
-    setEventTime((prevTime) => ({
-      ...prevTime,
-      [name]: value.padStart(2, "0"),
-    }));
   };
 
   return (
@@ -188,27 +178,6 @@ const CalendarApp = () => {
       <div className="events">
         {showEventPopup && (
           <div className="event-popup">
-            <div className="time-input">
-              <div className="event-popup-time">Time</div>
-              <input
-                type="number"
-                name="hours"
-                min={0}
-                max={24}
-                className="hours"
-                value={eventTime.hours}
-                onChange={handleTimeChange}
-              />
-              <input
-                type="number"
-                name="minutes"
-                min={0}
-                max={60}
-                className="minutes"
-                value={eventTime.minutes}
-                onChange={handleTimeChange}
-              />
-            </div>
             <textarea
               placeholder="Enter Event Text (Maximum 60 Characters)"
               value={eventText}
